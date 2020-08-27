@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Home{% endblock %}
+{% block header %}
+<h3></h3>
+{% endblock %}
+
+{% block content %}
+
+          <ul>
+            <li> Name : {{employee.first_name}} {{employee.middle_name}} {{employee.first_name}}</li>
+            <li> Birth Date : {{(employee.birth_date).date()}}</li>
+            <li> Address : {{employee.address}}</li>
+            <li> Mobile No.: {{employee.mobile}}</li>
+            <li> Gender.: {{employee.gender}}</li>
+            <li> Unit : {{employee_unit.unit_name}}</li>
+            <li> Joining Date : {{(employee.joining_date).date()}}</li>
+            <li> Designation : {{employee.designation}}</li>
+          </ul>
+    <button class="btn btn-primary" id="editemployee" onclick="editemployee()">Edit </button>
+    <button class="btn btn-primary" id="disableemployee" onclick="disableemployee()">Remove </button>
+    <a class="btn btn-primary" href="{{url_for('employee.employees')}}">Back</a>
+
+    <div id="editemployeewindow" style="display:none">
+      <form action="{{url_for('employee.edit_employee', employee_id=employee.id)}}" method="POST" enctype=multipart/form-data>
+        <label for="name">Name</label>
+        <input type="text" id="name"  value="{{employee.first_name}} {{employee.middle_name}} {{employee.last_name}}" disabled>
+        <label for="birth_date">Birth Date</label>
+        <input type="date" id="birth_date" name="birth_date" value="{{(employee.birth_date).date()}}" disabled>
+        <label for="gender">Gender</label>
+        <input type="text" id="gender" name="gender" value="{{employee.gender}}" disabled>
+        <label for="joining_date">Joining Date</label>
+        <input type="date" id="joining_date" name="joining_date" value="{{(employee.joining_date).date()}}" disabled>
+        <label for="Employee_address">Address</label>
+        <input type="text" id="Employee_address" name="employee_address" value="{{employee.address}}">
+        <label for="mobile">Mobile</label>
+        <input type="number" id="mobile" name="mobile" value="{{employee.mobile}}">
+
+        <label for="gender">Unit</label>
+        <select name="employee_unit" id="employee_unit">
+          {% for unit in units %}
+            <option value="{{unit.id}}">{{unit.unit_name}}</option>
+          {% endfor %}
+        </select>
+        <label for="designation">Designation</label>
+        <input type="text" id="designation" name="designation" value="{{employee.designation}}">
+        <label for="photo_id_no">Photo Id No.</label>
+        <input type="number" id="photo_id_no" name="photo_id_no" value="{{employee.photo_id_no}}">
+        <label for="photo_id">Upload Photo Id</label>
+        <img id="displayPhotoId" alt="Photo Id" src="{{url_for('employee.display_photo_id', photo_id=employee.id)}}" width="150" height="120" />
+        <input type=file name=photo_id id="photo_id" accept=".gif,.jpg,.jpeg,.png" onchange="document.getElementById('displayPhotoId').src = window.URL.createObjectURL(this.files[0])">
+        <span>
+        <button class="btn btn-primary" type="submit">Submit</button> &nbsp;
+        <button class="btn btn-primary" type="cancel" checked>Cancel</button>
+        </span>
+      </form>
+    </div>
+
+    <div id="disableemployeewindow" style="display:none">
+      <form action="{{url_for('employee.disable_employee', employee_id=employee.id)}}" method="POST">
+        <label for="is_working">Remove Employee?</label>
+        <select name="is_working" id="is_working">
+          <option value="True">No</option>
+          <option value="False">Yes</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    <script>
+      function editemployee() {
+        document.querySelector('#editemployeewindow').style.display = "initial";
+      }
+      function disableemployee() {
+        document.querySelector('#disableemployeewindow').style.display = "initial";
+      }
+      </script>
+{% endblock %}

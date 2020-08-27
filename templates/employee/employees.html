@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Employees{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    <ol>
+      {% for employee in employees %}
+        {% if employee.is_active==True %}
+          <a href="{{ url_for('employee.employeedetails', employee_id=employee.id)}}">
+            <li>
+            {{ (employee.first_name)|title }}  {{ employee.last_name|title }} <br>
+            </li>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </ol>
+    <button class="btn btn-primary" id="addemployee" onclick="addemployee()">Add Employee </button>
+
+    <div id="addemployeewindow" style="display:none">
+      <form action="{{url_for('employee.add_employee')}}" method="POST" enctype=multipart/form-data>
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" placeholder="first_name">
+        <label for="middle_name">Middle Name</label>
+        <input type="text" id="middle_name" name="middle_name" placeholder="middle_name">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="last_name">
+        <label for="birth_date">Birth Date</label>
+        <input type="date" id="birth_date" name="birth_date" placeholder="01-01-2020">
+        <label for="Employee_address">Address</label>
+        <input type="text" id="Employee_address" name="employee_address" Placeholder="Address">
+        <label for="mobile">Mobile</label>
+        <input type="number" id="mobile" name="mobile" placeholder="Mobile No.">
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <label for="employee_unit">Unit</label>
+        <select name="employee_unit" id="employee_unit">
+          {% for unit in units %}
+            <option value="{{unit.id}}">{{unit.unit_name}}</option>
+          {% endfor %}
+        </select>
+        <label for="joining_date">Joining Date</label>
+        <input type="date" id="joining_date" name="joining_date" placeholder="01-01-2020">
+        <label for="designation">Designation</label>
+        <input type="text" id="designation" name="designation" placeholder="Designation">
+        <label for="photo_id_no">Photo Id No.</label>
+        <input type="number" id="photo_id_no" name="photo_id_no" placeholder="photo_id_no">
+        <label for="photo_id">Upload Photo Id</label>
+        <img id="displayPhotoId" alt="Photo Id" width="150" height="120" />
+        <input type=file name=photo_id id="photo_id" accept=".gif,.jpg,.jpeg,.png" onchange="document.getElementById('displayPhotoId').src = window.URL.createObjectURL(this.files[0])">
+
+        <br>
+        <span>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        </span>
+      </form>
+    </div>
+
+
+    <script>
+      function addemployee() {
+        document.querySelector('#addemployeewindow').style.display = "initial";
+      }
+    </script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Home{% endblock %}
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+
+    <ol>
+      {% for unit in units %}
+        {% if unit.is_active==True %}
+          <a href="{{ url_for('unit.unitdetails', unit_id=unit.id)}}">
+            <li>
+            {{ (unit.unit_name)|title }} :- {{ unit.address|title }} <br>
+            </li>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </ol>
+    <button class="btn btn-primary" id="addunit" onclick="addunit()">Add Unit </button>
+    <button class="btn btn-primary" id="inactiveunits" onclick="inactiveunits()">InActive Units </button>
+
+    <div id="inactiveunitswindow" style="display:none">
+      <ol>
+        {% for unit in units %}
+          {% if unit.is_active==False %}
+            <a href="{{ url_for('unit.unitdetails', unit_id=unit.id)}}">
+              <li>
+              {{ (unit.unit_name)|title }} :- {{ unit.address|title }} <br>
+              </li>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div id="addunitwindow" style="display:none">
+      <form action="{{url_for('unit.add_unit')}}" method="POST">
+        <label for="unit_name">Name of Unit</label>
+        <input type="text" id="unit_name" name="unit_name" placeholder="Unit Name">
+        <label for="unit_address">Address</label>
+        <input type="text" id="unit_address" name="unit_address" placeholder="Unit Address">
+        <label for="phone">Phone</label>
+        <input type="number" id="phone" name="phone" placeholder="Unit Phone">
+        <label for="starting_date">Starting Date</label>
+        <input type="date" id="starting_date" name="starting_date" placeholder="Unit Starting Date">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" placeholder="description">
+
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+
+
+<script>
+  function addunit() {
+    document.querySelector('#addunitwindow').style.display = "initial";
+  }
+  function inactiveunits() {
+    document.querySelector('#inactiveunitswindow').style.display = "initial";
+  }
+  </script>
+{% endblock %}

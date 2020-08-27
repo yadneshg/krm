@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Salary{% endblock %}
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<ol>
+  {% for salary_detail in salary_details %}
+    <li>Employee : {{salary_detail.emp_id}}, Salary : {{salary_detail.salary}}, Effective Date : {{salary_detail.salary}}</li>
+  {% endfor %}
+</ol>
+
+<button class="btn btn-primary" id="addemployee" onclick="addemployee()">Add Employee </button>
+{% endblock %}

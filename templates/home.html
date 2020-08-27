@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Home{% endblock %}
+{% block header %}
+{% endblock %}
+
+{% block content %}
+{{message}}
+<div class='centeralign'>
+  <h3>Administrative Task</h3>
+</div>
+  <h4><a class="btn btn-primary" href="{{url_for('unit.units')}}">Units</a></h4>
+  <h4><a class="btn btn-primary" href="{{url_for('employee.employees')}}">Employees</a></h4>
+  <h4><a class="btn btn-primary" href="{{url_for('salary.salaries')}}">Salary Details</a></h4>
+  <h4><a class="btn btn-primary" href="{{url_for('employee.employees')}}">Account Categories</a></h4>
+
+  <hr>
+
+{% endblock %}
